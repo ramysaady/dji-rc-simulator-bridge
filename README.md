@@ -69,6 +69,10 @@ For a terminal-only experience with telemetry statistics and debugging:
 ```bash
 python dji.py
 ```
+### Method 4: Standalone Executable (No Python required!)
+If you downloaded the compiled executable or have `dji_bridge.exe` in your folder:
+* Simply double-click **`dji_bridge.exe`**.
+* This will launch the background telemetry service and automatically open the Web Dashboard in your default browser (`http://localhost:8080`).
 
 ---
 
