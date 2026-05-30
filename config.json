@@ -1,0 +1,9 @@
+{
+    "invert_lx": false,
+    "invert_ly": false,
+    "invert_rx": false,
+    "invert_ry": false,
+    "swap_sticks": false,
+    "camera_threshold": 25000,
+    "mode": 2
+}

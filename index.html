@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJI RC-N1C Flight Simulator Panel</title>
+    <!-- Outfit Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg-decor left-decor"></div>
+    <div class="glass-bg-decor right-decor"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header glass-panel">
+            <div class="header-logo">
+                <span class="dji-brand">DJI</span>
+                <span class="rc-model">RC-N1C</span>
+                <span class="status-badge-container">
+                    <span id="status-badge" class="badge badge-offline">Offline</span>
+                </span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Connection Port</span>
+                    <span id="port-name" class="stat-value">None Detected</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Telemetry Rate</span>
+                    <span id="telemetry-rate" class="stat-value">0 Pkt/s</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Total Packets</span>
+                    <span id="total-packets" class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="app-main">
+            <!-- JOYSTICKS CONTAINER -->
+            <section class="joysticks-section glass-panel">
+                <h2 class="section-title"><span class="neon-text">HUD</span> Live Controller Visualizer</h2>
+                <div class="hud-container">
+                    <!-- LEFT STICK -->
+                    <div class="hud-stick-card">
+                        <div class="hud-circle-wrapper">
+                            <canvas id="left-stick-canvas" width="220" height="220"></canvas>
+                            <div class="hud-axis-label vertical-label">Throttle</div>
+                            <div class="hud-axis-label horizontal-label">Yaw</div>
+                        </div>
+                        <div class="hud-stick-details">
+                            <h3>Left Joystick</h3>
+                            <div class="value-readouts">
+                                <div class="readout"><span class="lbl">Yaw (X):</span> <span id="val-lx" class="val">0</span></div>
+                                <div class="readout"><span class="lbl">Throttle (Y):</span> <span id="val-ly" class="val">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT STICK -->
+                    <div class="hud-stick-card">
+                        <div class="hud-circle-wrapper">
+                            <canvas id="right-stick-canvas" width="220" height="220"></canvas>
+                            <div class="hud-axis-label vertical-label">Pitch</div>
+                            <div class="hud-axis-label horizontal-label">Roll</div>
+                        </div>
+                        <div class="hud-stick-details">
+                            <h3>Right Joystick</h3>
+                            <div class="value-readouts">
+                                <div class="readout"><span class="lbl">Roll (X):</span> <span id="val-rx" class="val">0</span></div>
+                                <div class="readout"><span class="lbl">Pitch (Y):</span> <span id="val-ry" class="val">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CAMERA DIAL GAUGE -->
+                <div class="dial-container glass-panel-inner">
+                    <div class="dial-header">
+                        <span class="dial-title">🎥 Gimbal Dial</span>
+                        <span id="val-camera" class="dial-value">0</span>
+                    </div>
+                    <div class="dial-gauge-track">
+                        <div id="dial-gauge-bar" class="dial-gauge-fill" style="width: 50%;"></div>
+                        <div class="dial-gauge-center"></div>
+                    </div>
+                    <div class="dial-active-indicators">
+                        <span id="dial-btn-left" class="dial-btn-indicator">Dial Left (Button A)</span>
+                        <span id="dial-btn-right" class="dial-btn-indicator">Dial Right (Button B)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTROLS & WIZARD SIDEBAR -->
+            <div class="sidebar-container">
+                <!-- CONFIG CARD -->
+                <section class="config-section glass-panel">
+                    <h2 class="section-title">⚙️ Calibration & Tuning</h2>
+                    <form id="config-form" class="config-form">
+                        <div class="form-group-row">
+                            <label class="switch-container">
+                                <input type="checkbox" id="swap_sticks">
+                                <span class="slider"></span>
+                                <span class="checkbox-label">Swap Sticks (Mode 1)</span>
+                            </label>
+                        </div>
+                        
+                        <div class="config-grid">
+                            <div class="form-group">
+                                <label class="switch-container">
+                                    <input type="checkbox" id="invert_lx">
+                                    <span class="slider"></span>
+                                    <span class="checkbox-label">Invert Yaw</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switch-container">
+                                    <input type="checkbox" id="invert_ly">
+                                    <span class="slider"></span>
+                                    <span class="checkbox-label">Invert Throttle</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switch-container">
+                                    <input type="checkbox" id="invert_rx">
+                                    <span class="slider"></span>
+                                    <span class="checkbox-label">Invert Roll</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switch-container">
+                                    <input type="checkbox" id="invert_ry">
+                                    <span class="slider"></span>
+                                    <span class="checkbox-label">Invert Pitch</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group slider-group">
+                            <div class="slider-label-row">
+                                <span class="slider-title">Camera Button Trigger deadzone</span>
+                                <span id="camera-threshold-val" class="slider-value">25000</span>
+                            </div>
+                            <input type="range" id="camera_threshold" min="5000" max="32000" step="1000" value="25000">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="save-btn" class="glow-button">Apply Configurations</button>
+                            <button type="button" id="reset-btn" class="glow-button reset-button">Reset to Defaults</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- NAVIGATION TABS FOR GUIDES -->
+                <section class="guides-section glass-panel">
+                    <div class="tab-headers">
+                        <button class="tab-btn active" data-tab="tab-quick">🚀 Connection Guide</button>
+                        <button class="tab-btn" data-tab="tab-diagnostics">🛠️ Live Hardware Debug</button>
+                    </div>
+
+                    <div class="tab-contents">
+                        <!-- QUICKSTART TAB -->
+                        <div id="tab-quick" class="tab-content active">
+                            <ul class="setup-checklist">
+                                <li class="check-item checked">
+                                    <div class="circle-check">1</div>
+                                    <div class="check-text">
+                                        <h4>Install DJI Assistant 2</h4>
+                                        <p>Download and run "Consumer Drones Series" installer to bind underlying virtual COM drivers.</p>
+                                    </div>
+                                </li>
+                                <li id="chk-usb" class="check-item">
+                                    <div class="circle-check">2</div>
+                                    <div class="check-text">
+                                        <h4>Plug in USB-C Cable</h4>
+                                        <p>Connect your DJI RC-N1C via the <b>bottom USB-C port</b> to your computer, then turn the controller on.</p>
+                                    </div>
+                                </li>
+                                <li id="chk-bridge" class="check-item">
+                                    <div class="circle-check">3</div>
+                                    <div class="check-text">
+                                        <h4>Auto-Detect & Run</h4>
+                                        <p>Close DJI Assistant 2 completely. The bridge script will auto-detect the COM port and map sticks.</p>
+                                    </div>
+                                </li>
+                                <li class="check-item font-highlight">
+                                    <div class="circle-check">4</div>
+                                    <div class="check-text">
+                                        <h4>Launch Flight Simulator</h4>
+                                        <p>Launch <i>Liftoff</i>, <i>DCL</i>, or <i>VelociDrone</i>. Select Xbox Gamepad and calibrate channels!</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- DIAGNOSTICS TAB -->
+                        <div id="tab-diagnostics" class="tab-content">
+                            <p class="diagnostics-summary">These are the <b>raw, uncalibrated serial bytes</b> arriving directly from the hardware potentiometers via USB.</p>
+                            <div class="diag-grid">
+                                <div class="diag-card">
+                                    <span class="diag-label">Raw Yaw (LX)</span>
+                                    <span id="raw-lx" class="diag-value">1024</span>
+                                    <div class="potentiometer-bar"><div id="pot-lx" class="pot-fill" style="width: 50%;"></div></div>
+                                </div>
+                                <div class="diag-card">
+                                    <span class="diag-label">Raw Throttle (LY)</span>
+                                    <span id="raw-ly" class="diag-value">1024</span>
+                                    <div class="potentiometer-bar"><div id="pot-ly" class="pot-fill" style="width: 50%;"></div></div>
+                                </div>
+                                <div class="diag-card">
+                                    <span class="diag-label">Raw Roll (RX)</span>
+                                    <span id="raw-rx" class="diag-value">1024</span>
+                                    <div class="potentiometer-bar"><div id="pot-rx" class="pot-fill" style="width: 50%;"></div></div>
+                                </div>
+                                <div class="diag-card">
+                                    <span class="diag-label">Raw Pitch (RY)</span>
+                                    <span id="raw-ry" class="diag-value">1024</span>
+                                    <div class="potentiometer-bar"><div id="pot-ry" class="pot-fill" style="width: 50%;"></div></div>
+                                </div>
+                                <div class="diag-card wide-card">
+                                    <span class="diag-label">Raw Gimbal Dial (Camera)</span>
+                                    <span id="raw-camera" class="diag-value">1024</span>
+                                    <div class="potentiometer-bar"><div id="pot-camera" class="pot-fill" style="width: 50%;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>DJI RC-N1C Virtual Gamepad Server © 2026. Custom designed with modern web aesthetics.</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

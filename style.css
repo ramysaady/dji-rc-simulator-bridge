@@ -1,0 +1,798 @@
+/* ==========================================================================
+   DESIGN SYSTEM & VARIABLES
+   ========================================================================== */
+:root {
+    --bg-dark: hsl(220, 20%, 6%);
+    --panel-bg: rgba(18, 22, 33, 0.65);
+    --panel-border: rgba(255, 255, 255, 0.08);
+    --inner-bg: rgba(10, 12, 18, 0.5);
+    
+    --color-text: hsl(0, 0%, 98%);
+    --color-subtext: hsl(218, 12%, 65%);
+    --color-muted: hsl(220, 8%, 45%);
+    
+    --accent-blue: hsl(215, 100%, 55%);
+    --accent-blue-glow: hsla(215, 100%, 55%, 0.35);
+    --accent-cyan: hsl(180, 100%, 50%);
+    --accent-cyan-glow: hsla(180, 100%, 50%, 0.35);
+    
+    --status-green: hsl(145, 80%, 48%);
+    --status-green-glow: hsla(145, 80%, 48%, 0.4);
+    --status-orange: hsl(32, 100%, 52%);
+    --status-orange-glow: hsla(32, 100%, 52%, 0.3);
+    
+    --font-primary: 'Outfit', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --transition-soft: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ==========================================================================
+   RESET & DECORATIVE BACKGROUNDS
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--color-text);
+    font-family: var(--font-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* Background Glowing Blurs */
+.glass-bg-decor {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(160px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.75;
+}
+
+.left-decor {
+    background: radial-gradient(circle, var(--accent-blue-glow) 0%, transparent 70%);
+    top: -100px;
+    left: -200px;
+}
+
+.right-decor {
+    background: radial-gradient(circle, var(--accent-cyan-glow) 0%, transparent 70%);
+    bottom: -100px;
+    right: -200px;
+}
+
+/* ==========================================================================
+   CORE LAYOUT
+   ========================================================================== */
+.app-container {
+    width: 100%;
+    max-width: 1280px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Glassmorphism Panel Class */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.glass-panel-inner {
+    background: var(--inner-bg);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 18px;
+}
+
+/* ==========================================================================
+   HEADER COMPONENT
+   ========================================================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dji-brand {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #fff 30%, var(--color-subtext));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rc-model {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--accent-cyan);
+    border-left: 1px solid var(--panel-border);
+    padding-left: 12px;
+}
+
+/* Status Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-soft);
+    position: relative;
+}
+
+.badge-offline {
+    background: rgba(250, 110, 45, 0.12);
+    border: 1px solid var(--status-orange);
+    color: var(--status-orange);
+    box-shadow: 0 0 10px var(--status-orange-glow);
+    animation: pulse-orange 2s infinite ease-in-out;
+}
+
+.badge-online {
+    background: rgba(46, 204, 113, 0.12);
+    border: 1px solid var(--status-green);
+    color: var(--status-green);
+    box-shadow: 0 0 12px var(--status-green-glow);
+    animation: pulse-green 2s infinite ease-in-out;
+}
+
+.header-stats {
+    display: flex;
+    gap: 24px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD GRID
+   ========================================================================== */
+.app-main {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .app-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: var(--color-text);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.neon-text {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 8px var(--accent-cyan-glow);
+}
+
+/* ==========================================================================
+   HUD LIVE JOYSTICKS VISUALIZER
+   ========================================================================== */
+.joysticks-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.hud-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .hud-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hud-stick-card {
+    background: var(--inner-bg);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition-soft);
+}
+
+.hud-stick-card:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(10, 12, 18, 0.7);
+    box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.02);
+}
+
+.hud-circle-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+}
+
+.hud-axis-label {
+    position: absolute;
+    font-size: 10px;
+    color: var(--color-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    pointer-events: none;
+}
+
+.vertical-label {
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.horizontal-label {
+    bottom: 50%;
+    right: 8px;
+    transform: translateY(50%) rotate(90deg);
+    transform-origin: right center;
+}
+
+.hud-stick-details {
+    width: 100%;
+    text-align: center;
+}
+
+.hud-stick-details h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-subtext);
+}
+
+.value-readouts {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.readout {
+    font-size: 13px;
+    display: flex;
+    gap: 6px;
+}
+
+.readout .lbl {
+    color: var(--color-muted);
+}
+
+.readout .val {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   CAMERA GIMBAL DIAL GAUGE
+   ========================================================================== */
+.dial-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dial-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-subtext);
+}
+
+.dial-value {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--accent-blue);
+}
+
+.dial-gauge-track {
+    position: relative;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dial-gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    border-radius: 7px;
+    transition: width 0.05s ease-out;
+}
+
+.dial-gauge-center {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    left: 50%;
+    top: 0;
+}
+
+.dial-active-indicators {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+}
+
+.dial-btn-indicator {
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    color: var(--color-muted);
+    transition: var(--transition-soft);
+}
+
+.dial-btn-indicator.active {
+    background: rgba(33, 150, 243, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--color-text);
+    box-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+/* ==========================================================================
+   SIDEBAR - CONFIGURATION & CALIBRATION
+   ========================================================================== */
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.config-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* tactile toggle switch styles */
+.switch-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-subtext);
+    gap: 12px;
+}
+
+.switch-container input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-container .slider {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+    transition: .4s;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.switch-container .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--color-text);
+    border-radius: 50%;
+    transition: .4s;
+}
+
+.switch-container input:checked + .slider {
+    background-color: var(--accent-blue);
+    box-shadow: 0 0 8px var(--accent-blue-glow);
+}
+
+.switch-container input:checked + .slider:before {
+    transform: translateX(22px);
+    background-color: #fff;
+}
+
+/* Sliders */
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.slider-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-subtext);
+}
+
+.slider-value {
+    font-family: var(--font-heading);
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.slider-group input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+.slider-group input[type=range]:focus {
+    outline: none;
+}
+
+.slider-group input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.slider-group input[type=range]::-webkit-slider-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    box-shadow: 0 0 8px var(--accent-cyan-glow);
+    transition: var(--transition-soft);
+}
+
+.slider-group input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background: #fff;
+}
+
+/* Glowing Button styling */
+.glow-button {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-soft);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.15);
+}
+
+.glow-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
+}
+
+.glow-button:active {
+    transform: translateY(0);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
+.glow-button.reset-button {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.09));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    color: var(--color-subtext);
+}
+
+.glow-button.reset-button:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.15));
+    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-text);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+.glow-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: 0.5s;
+}
+
+.glow-button:hover::before {
+    left: 100%;
+}
+
+/* ==========================================================================
+   NAVIGATION TABS & GUIDES
+   ========================================================================== */
+.tab-headers {
+    display: flex;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 18px;
+    gap: 8px;
+}
+
+.tab-btn {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 13px;
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-soft);
+}
+
+.tab-btn:hover {
+    color: var(--color-subtext);
+}
+
+.tab-btn.active {
+    color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+    text-shadow: 0 0 6px var(--accent-cyan-glow);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Checklist Styling */
+.setup-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: none;
+}
+
+.check-item {
+    display: flex;
+    gap: 14px;
+    opacity: 0.65;
+    transition: var(--transition-soft);
+}
+
+.check-item.checked {
+    opacity: 1;
+}
+
+.circle-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: var(--transition-soft);
+}
+
+.check-item.checked .circle-check {
+    background: rgba(46, 204, 113, 0.15);
+    border-color: var(--status-green);
+    color: var(--status-green);
+    box-shadow: 0 0 8px var(--status-green-glow);
+}
+
+.check-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 2px;
+}
+
+.check-text p {
+    font-size: 12px;
+    color: var(--color-subtext);
+    line-height: 1.4;
+}
+
+.font-highlight .circle-check {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.check-item.font-highlight {
+    opacity: 0.9;
+}
+
+/* Diagnostics Styles */
+.diagnostics-summary {
+    font-size: 12px;
+    color: var(--color-subtext);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.diag-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.diag-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.wide-card {
+    grid-column: span 2;
+}
+
+.diag-label {
+    font-size: 10px;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.diag-value {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-blue);
+}
+
+.potentiometer-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.pot-fill {
+    height: 100%;
+    background: var(--accent-blue);
+    border-radius: 2px;
+    transition: width 0.05s ease-out;
+}
+
+/* ==========================================================================
+   FOOTER COMPONENT
+   ========================================================================== */
+.app-footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 18px;
+}
+
+/* ==========================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
+@keyframes pulse-orange {
+    0% {
+        box-shadow: 0 0 6px rgba(250, 110, 45, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(250, 110, 45, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 6px rgba(250, 110, 45, 0.2);
+    }
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 6px rgba(46, 204, 113, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(46, 204, 113, 0.55);
+    }
+    100% {
+        box-shadow: 0 0 6px rgba(46, 204, 113, 0.25);
+    }
+}
